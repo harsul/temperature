@@ -4,7 +4,6 @@ from urllib import quote_plus, urlencode
 from hmac import HMAC
 import requests
 import json
-import os
 import RPi.GPIO as GPIO
 import dht11
 import time
@@ -51,11 +50,8 @@ def generate_sas_token():
 
 #send message to IoT Hub
 def send_message(token, message):
-	url = 'https://{0}/devices/{1}/messages/events?api-version=2016-11-14'.format(URI, IOT_DEVICE_ID)
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": token
-    }
+    url = 'https://{0}/devices/{1}/messages/events?api-version=2016-11-14'.format(URI, IOT_DEVICE_ID)
+    headers={"Content-Type": "application/json","Authorization": token}
 	#make json format of message
     data = json.dumps(message)
     print (data)
@@ -65,48 +61,47 @@ def send_message(token, message):
 token = generate_sas_token()
 
 while True:
-	print ("Reading data from sensors...")
-	#temperature and humidity sensor readings
+    print ("Reading data from sensors...")
+    print("Last valid input: " + str(datetime.datetime.now()))
     result = temp_hum.read()
     if result.is_valid():
-		temperature=result.temperature
-		humidity=result.humidity
-        print("Last valid input: " + str(datetime.datetime.now()))
+        temperature=result.temperature
+        humidity=result.humidity
         print("Temperature: %d C" % temperature)
         print("Humidity: %d %%" % humidity)
 		
 	#soil measurement sensor readings
-	if GPIO.input(soil):
+    if GPIO.input(soil):
 	#'No water' = 1/True (sensor's microcontroller light is off).
-		soil=0
-		print("Soil: No water detected")
-	else:
-		soil=1
+        soil=0
+        print("Soil: No water detected")
+    else:
+        soil=1
     #'Water' = 0/False (microcontroller light is on).
-		print("Soil: Water detected!")
+        print("Soil: Water detected!")
 	
 	#rain sensor readings
-	if not no_rain.is_active:
-		rain=1
+    if not no_rain.is_active:
+        rain=1
         print("Rain: Rain detected")
-	else:	
-		rain=0
-		print("Rain: No rain detected")
+    else:
+        rain=0
+        print("Rain: No rain detected")
         
 	#ldr sensor readings
-	if GPIO.input(ldr):
-		light=1
-		print ("Light: Yes")
-	else:
-		light=0
-		print ("Light: No")
+    if GPIO.input(ldr):
+        light=1
+        print ("Light: Yes")
+    else:
+        light=0
+        print ("Light: No")
 	
-	message = { "temp": str(temperature),
+    message = { "temp": str(temperature),
 		"humy":str(humidity),
 		"rain":str(rain),
 		"soil":str(soil),
 		"ldr":str(ldr)}
-	print("Sending data to IoT Hub...")
+    print("Sending data to IoT Hub...")
     send_message(token, message)
 		
     time.sleep(5)
