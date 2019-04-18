@@ -16,12 +16,13 @@ no_rain = InputDevice(18)
 soil=21
 ldr=4
 
+# Receive input signals through the pin.
+
 
 while True:
-# Receive input signals through the pin.
+    print("Last valid input: " + str(datetime.datetime.now()))
 	GPIO.setup(soil, GPIO.IN)
 	GPIO.setup(ldr,GPIO.IN)
-    print("Last valid input: " + str(datetime.datetime.now()))
 	#temperature and humidity sensor readings
     result = temp_hum.read()
     if result.is_valid():
