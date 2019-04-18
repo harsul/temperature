@@ -57,12 +57,4 @@ while True:
         light=0
         print ("Light: No")
 		
-    time.sleep(2)
-	
-	
-	
-	
-	
-	
-	
-	
+    time.sleep(5)
