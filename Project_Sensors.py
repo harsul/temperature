@@ -21,9 +21,9 @@ ldr=4
 
 while True:
     print("Last valid input: " + str(datetime.datetime.now()))
-	GPIO.setup(soil, GPIO.IN)
-	GPIO.setup(ldr,GPIO.IN)
-	#temperature and humidity sensor readings
+    GPIO.setup(soil, GPIO.IN)
+    GPIO.setup(ldr,GPIO.IN)
+    #temperature and humidity sensor readings
     result = temp_hum.read()
     if result.is_valid():
         temperature = result.temperature
