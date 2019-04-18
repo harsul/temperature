@@ -17,12 +17,12 @@ soil=21
 ldr=4
 
 # Receive input signals through the pin.
-GPIO.setup(soil, GPIO.IN)
-GPIO.setup(ldr,GPIO.IN)
+
 
 while True:
     print("Last valid input: " + str(datetime.datetime.now()))
-    
+    GPIO.setup(soil, GPIO.IN)
+    GPIO.setup(ldr,GPIO.IN)
     #temperature and humidity sensor readings
     result = temp_hum.read()
     if result.is_valid():
@@ -51,12 +51,12 @@ while True:
         
 	#ldr sensor reading
     if GPIO.input(ldr):
-        light=0
-        print ("Light: No")
-    else:
         light=1
         print ("Light: Yes")
-	print ("-"*10)	
+    else:
+        light=0
+        print ("Light: No")
+		
     time.sleep(2)
 	
 	
