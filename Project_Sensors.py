@@ -51,10 +51,10 @@ while True:
         
 	#ldr sensor reading
     if GPIO.input(ldr):
-        light_data=1
-        print ("Light: Yes")
-    else:
         light_data=0
         print ("Light: No")
+    else:
+        light_data=1
+        print ("Light: Yes")
 		
     time.sleep(5)
