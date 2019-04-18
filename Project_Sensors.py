@@ -34,27 +34,27 @@ while True:
 	#soil measurement sensor readings
     if GPIO.input(soil):
 	#'No water' = 1/True (sensor's microcontroller light is off).
-        soil=0
+        soil_data=0
         print("Soil: No water detected")
     else:
-        soil=1
+        soil_data=1
     #'Water' = 0/False (microcontroller light is on).
         print("Soil: Water detected!")
 	
 	#rain sensor readings
     if not no_rain.is_active:
-        rain=1
+        rain_data=1
         print("Rain: Rain detected")
     else:
-        rain=0
+        rain_data=0
         print("Rain: No rain detected")
         
 	#ldr sensor reading
     if GPIO.input(ldr):
-        light=1
+        light_data=1
         print ("Light: Yes")
     else:
-        light=0
+        light_data=0
         print ("Light: No")
 		
     time.sleep(5)
